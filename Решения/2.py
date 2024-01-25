@@ -206,9 +206,11 @@ def Hard_second_task():
 
 def Hard_third_task():
     room = int(input('Введите номер комнаты: '))
+    rooms = [x+1 for x in range(room)]
     tower = []
-    for i in range(room):
-        nlist = []
+    x = 1
+    for el in rooms:
+        pass
 
 
 
