@@ -61,9 +61,7 @@ def Normal_first_task():
             salary = int(worker[2])
             if salary > 500000:
                 continue
-            print(name.upper(), salary*0.87,sep=' - '
-
-                  )
+            print(name.upper(), salary*0.87,sep=' - ' )
 #Hard
 # Задание - 1
 # Давайте опишем пару сущностей player и enemy через словарь,
@@ -84,6 +82,7 @@ def Hard_first_task():
     enemy = {'name': name_en,'health':120,'damage':9}
     def attack(attacker, defenser):
         defenser['health'] -= attacker['damage']
+        print(f'Игрок {attacker['name']} наносит удар игроку {defenser['name']}')
         print(f'Здоровье {defenser['name']} теперь равно: {defenser['health']}')
     attack(player, enemy)
 
@@ -91,12 +90,74 @@ def Hard_first_task():
 # Давайте усложним предыдущее задание, измените сущности, добавив новый параметр - armor = 1.2
 # Теперь надо добавить функцию, которая будет вычислять и возвращать полученный урон по формуле damage / armor
 # Следовательно у вас должно быть 2 функции, одна наносит урон, вторая вычисляет урон по отношению к броне.
-
 # Сохраните эти сущности, полностью, каждую в свой файл,
 # в качестве названия для файла использовать name, расширение .txt
 # Напишите функцию, которая будет считывать файл игрока и его врага, получать оттуда данные, и записывать их в словари,
 # после чего происходит запуск игровой сессии, где сущностям поочередно наносится урон,
 # пока у одного из них health не станет меньше или равен 0.
 # После чего на экран должно быть выведено имя победителя, и количество оставшихся единиц здоровья.
+
+def Hard_second_task():
+    name_player = input('Введите имя игрока: ')
+    health = int(input('Введите здоровье игрока: '))
+    damage = int(input('Введите урон игрока: '))
+    armor = float(input('Введите броню игрока: '))
+    path_player = os.path.join('',f'{name_player}.txt')
+    with open(path_player,'w',encoding='UTF-8') as f:
+        f.write(f'{name_player} - {health} - {damage} - {armor}')
+    name_enemy = input('Введите имя противника: ')
+    health = int(input('Введите здоровье противника: '))
+    damage = int(input('Введите урон противника: '))
+    armor = float(input('Введите броню противника: '))
+    path_enemy = os.path.join('', f'{name_enemy}.txt')
+    with open(path_enemy,'w',encoding='UTF-8') as f:
+        f.write(f'{name_enemy} - {health} - {damage} - {armor}')
+    def read():
+        player = {'name':'','health':0,'damage':0,'armor':0}
+        with open(path_player,'r',encoding='UTF-8') as f:
+            line = f.readline().split(' ')
+            player['name'] = line[0]
+            player['health'] = int(line[2])
+            player['damage'] = int(line[4])
+            player['armor'] = float(line[6])
+        enemy = {'name':'','health':0,'damage':0,'armor':0}
+        with open(path_enemy,'r',encoding='UTF-8') as f:
+            line = f.readline().split(' ')
+            enemy['name'] = line[0]
+            enemy['health'] = int(line[2])
+            enemy['damage'] = int(line[4])
+            enemy['armor'] = float(line[6])
+        return (player,enemy)
+    players = read()
+    player = players[0]
+    enemy = players[1]
+
+    def reducewithArm(damage,armor):
+        actual_dmg = damage / armor
+        return actual_dmg
+
+
+    def attack(attacker,attacked):
+        attacked['health'] -= reducewithArm(attacker['damage'],attacked['armor'])
+        print(f'Игрок {attacker['name']} наносит удар игроку {attacked['name']},'
+              f'Урон без брони:{attacker['damage']},'
+              f'Урон с броней:{reducewithArm(attacker['damage'],attacked['armor'])}')
+        print(f'Здоровье {attacked['name']} теперь равно: {attacked['health']}')
+
+    game = input('Начать сражение(y/n)?: ')
+    if game == 'n':
+        print('Сворачиваем сражение...')
+    elif game == 'y':
+        while True:
+            attack(player,enemy)
+            if (enemy['health'] <= 0) and (player['health'] > 0):
+                print(f'Победил {player['name']} c {enemy['health']} ОЗ')
+                break
+            attack(enemy,player)
+            if (enemy['health'] > 0) and (player['health'] <= 0):
+                print(f'Победил {enemy['name']} c {enemy['health']} ОЗ')
+                break
+
+
 if __name__ == "__main__":
-    Hard_first_task()
+    Hard_second_task()
