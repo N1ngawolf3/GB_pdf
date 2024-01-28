@@ -127,10 +127,10 @@ def Hard_second_task():
             enemy['health'] = int(line[2])
             enemy['damage'] = int(line[4])
             enemy['armor'] = float(line[6])
-        return (player,enemy)
-    players = read()
-    player = players[0]
-    enemy = players[1]
+        return player,enemy
+
+
+    player, enemy = read()
 
     def reducewithArm(damage,armor):
         actual_dmg = damage / armor
@@ -141,8 +141,9 @@ def Hard_second_task():
         attacked['health'] -= reducewithArm(attacker['damage'],attacked['armor'])
         print(f'Игрок {attacker['name']} наносит удар игроку {attacked['name']},'
               f'Урон без брони:{attacker['damage']},'
-              f'Урон с броней:{reducewithArm(attacker['damage'],attacked['armor'])}')
-        print(f'Здоровье {attacked['name']} теперь равно: {attacked['health']}')
+              f'Урон с броней:{reducewithArm(attacker['damage'],attacked['armor']):.2f}')
+        print(f'Здоровье {attacked['name']} теперь равно: {attacked['health']:.2f}')
+
 
     game = input('Начать сражение(y/n)?: ')
     if game == 'n':
@@ -151,11 +152,11 @@ def Hard_second_task():
         while True:
             attack(player,enemy)
             if (enemy['health'] <= 0) and (player['health'] > 0):
-                print(f'Победил {player['name']} c {enemy['health']} ОЗ')
+                print(f'Победил {player['name']} c {enemy['health']:.2f} ОЗ')
                 break
             attack(enemy,player)
             if (enemy['health'] > 0) and (player['health'] <= 0):
-                print(f'Победил {enemy['name']} c {enemy['health']} ОЗ')
+                print(f'Победил {enemy['name']} c {enemy['health']:.2f} ОЗ')
                 break
 
 
