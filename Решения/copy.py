@@ -66,56 +66,7 @@ def Easy_third_task():
 # Для решения данной задачи используйте алгоритмы из задания easy,
 # оформленные в виде соответствующих функций,
 # и импортированные в данный файл из easy.py
-def Normal_first_task():
-    def to_dir():
-        while True:
-            try:
-                name = input('Введите название папки: ')
-                os.chdir(os.getcwd()+'\\'+name)
-                break
-            except:
-                print('Невозможно перейти')
 
-
-
-    def view_files():
-        print(os.listdir())
-
-
-    def del_dir():
-        while True:
-            try:
-                name = input('Введите название папки: ')
-                dir_path = os.path.join(os.getcwd(), f'{name}')
-                os.rmdir(dir_path)
-                print('Папка удалена')
-                break
-            except:
-                print('Невозможно удалить')
-
-
-
-    def make_dir():
-        while True:
-            name = input('Введите имя папки: ')
-            dir_path = os.path.join(os.getcwd(), f'{name}')
-            os.mkdir(dir_path)
-            print('Папка создана')
-            break
-
-    do = {'1':to_dir,
-          '2':view_files,
-          '3':del_dir,
-          '4':make_dir}
-
-    while True:
-        print("""Выберите действие из списка ниже:
-                 1. Перейти в папку
-                 2. Просмотреть содержимое текущей папки
-                 3. Удалить папку
-                 4. Создать папку """)
-        command = input('Введите номер команды: ')
-        do[command]()
 
 #Hard
 # Задание-1:
@@ -133,7 +84,6 @@ def Normal_first_task():
 # Исходной директорией считать ту, в которой был запущен скрипт.
 # P.S. По возможности, сделайте кросс-платформенную реализацию.
 
-#Фактически тоже самое, что и функция выше с небольшими изменениями
 
 if __name__ == '__main__':
-    Normal_first_task()
+    Easy_third_task()
